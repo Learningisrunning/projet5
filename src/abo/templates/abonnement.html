@@ -1,0 +1,13 @@
+{% extends 'base_flow.html' %}
+{% block content %}
+    <h2>suivre d'autres utilisateurs</h2>
+    <input type="search">
+    <h2>Abonnements</h2>
+    <ul>
+        {% for user in utilisateur %}
+            <li>{{ user.username }} <button type="submit">Ne plus suivre</button></li>
+        {% endfor %}
+    </ul>
+    <h2>Abonnés</h2>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base_flow.html' %}
+{% block content %}
+    <h2>Ajouter une critique</h2>
+    <form  method="POST" action="{% url 'creer_critique' %}" enctype="multipart/form-data", id="form_rep_demande_critique">
+        {% csrf_token %}
+        {% if numero_critique_rep == None %}
+            {{form_demander_critique.as_p}}
+            {{ form_creer_critique.as_p }}
+            {{message}}
+            <button type="submit">Envoyer</button>
+        {% else %}
+            {{data.titre}}
+            {{data.description}}
+            {{data.img_livre}}
+            {{ form_creer_critique.as_p }}
+            {{message}}
+            <button type="submit"  name="critique_numero" value= "{{data.id}} " form="form_rep_demande_critique">Envoyer</button>
+        {% endif %}
+    </form>
+{% endblock content %}

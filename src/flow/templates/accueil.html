@@ -1,0 +1,33 @@
+{% extends 'base_flow.html' %}
+{% block content %}
+    <a href="{% url 'demander_critique' %}"><button type="button">Demander une critique</button></a>
+    <a href="{% url 'creer_critique' %}"><button type="button">Créer une critique</button></a>
+
+    <section>
+        {% for critique in critique_demandee %}
+        <ul>
+            {% if critique.reponse_critique == None %}
+                <form action="{% url 'creer_critique_rep_demande' %}" method="POST" id="critique_rep_form">
+                    {% csrf_token %}
+                    <div id="critique_demandee">
+                        <li>{{critique.titre}}</li>
+                        <li>{{critique.description}}</li>
+                        <li>{{critique.img_livre}}</li>
+                        <li>{{critique.id}}</li>
+                    </div>
+                    <button type="submit"  name="critique_rep" value= "{{critique.id}} " form="critique_rep_form">Ajouter une critique</button>
+                </form>
+               
+            {% else %}
+                <li>{{critique.titre}}</li>
+                <li>{{critique.description}}</li>
+                <li>{{critique.img_livre}}</li>
+
+                <li>{{critique.reponse_critique.titre}}</li>
+                <li>{{critique.reponse_critique.note}}</li>
+                <li>{{critique.reponse_critique.commentaire}}</li>
+            {% endif %}
+        </ul>
+        {% endfor %}
+    </section>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'base_flow.html' %}
+{% block content %}
+    <h2>demander une critique</h2>
+    <form method="POST" action="{% url 'demander_critique' %}" enctype="multipart/form-data">
+        {{  form_demander_critique.as_p }}
+        {% csrf_token %}
+        {{message}}
+
+        <button type="submit">Envoyer</button>
+    </form>
+{% endblock content %}
