@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'login',
     'flow',
     'abo',
+    'post',
 ]
 
 MIDDLEWARE = [

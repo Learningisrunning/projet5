@@ -18,6 +18,7 @@ from django.urls import path
 from login import views
 import flow.views
 import abo.views
+import post.views
 
 
 urlpatterns = [
@@ -31,6 +32,7 @@ urlpatterns = [
     path('demander_critique/', flow.views.demander_critique, name='demander_critique'),
     path('creer_critique/', flow.views.creer_critique, name='creer_critique'),
     path('creer_critique_rep_demande/', flow.views.reponse_demande_critique, name='creer_critique_rep_demande'),
-    path('abonnements/', abo.views.abonnement, name='abonnements')
+    path('abonnements/', abo.views.abonnement, name='abonnements'),
+    path('posts-user/', post.views.post_user, name='posts-user')
     
 ]

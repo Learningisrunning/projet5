@@ -1,0 +1,18 @@
+{% extends 'base_flow.html' %}
+{% block content %}
+    <h1>Vos Posts : </h1>
+    <ul>
+        {% for critique in liste_critique_demandees %}
+            <li>{{critique.titre}}</li>
+            <li>{{critique.description}}</li>
+            <li>{{critique.img_livre}}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for critique in liste_critique_crees %}
+            <li>{{critique.titre}}</li>
+            <li>{{critique.note}}</li>
+            <li>{{critique.commentaire}}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
