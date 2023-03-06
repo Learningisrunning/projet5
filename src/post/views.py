@@ -19,6 +19,6 @@ def post_user(request):
         if user.username == critique_demandees[j].createur:
             liste_critique_demandees.append(critique_demandees[j])
         #faire le test ici et créer les liste des demande et critique crees
-    print(liste_critique_demandees[1].description)
+
      
     return render(request, 'posts.html', context={ 'user' : user, 'liste_critique_crees' : liste_critique_crees, 'liste_critique_demandees' : liste_critique_demandees })

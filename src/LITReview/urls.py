@@ -33,6 +33,8 @@ urlpatterns = [
     path('creer_critique/', flow.views.creer_critique, name='creer_critique'),
     path('creer_critique_rep_demande/', flow.views.reponse_demande_critique, name='creer_critique_rep_demande'),
     path('abonnements/', abo.views.abonnement, name='abonnements'),
-    path('posts-user/', post.views.post_user, name='posts-user')
+    path('posts-user/', post.views.post_user, name='posts-user'),
+    path('unfollow/', abo.views.unfollow, name ="unfollow"),
+    path('follow/', abo.views.follow, name ="follow"),
     
 ]
