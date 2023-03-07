@@ -38,6 +38,7 @@ def creer_critique(request):
      numero_critique_rep = request.POST.get('critique_numero', None)
      data_demande_critique = DemanderCritiqueMod.objects.all()
      datas = ""
+     user = request.user
      if numero_critique_rep != None:
           for i in range(len(data_demande_critique)):
                if data_demande_critique[i].id == int(numero_critique_rep):
@@ -50,7 +51,7 @@ def creer_critique(request):
      if request.method == 'POST' and numero_critique_rep == None:
           form_demander_critique = DemanderCritiqueForm(request.POST, request.FILES)
           form_creer_critique = CreerCritiqueForm(request.POST)
-          user = request.user
+          
           if all ([form_creer_critique.is_valid(), form_demander_critique.is_valid()]):
                
                 

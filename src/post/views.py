@@ -40,6 +40,7 @@ def modify_deleted(request):
                     'titre_demande' : critique.titre,
                     'description' : critique.description,
                     'img_livre' :  critique.img_livre
+                   
                 }
 
                 form = DemanderCritiqueForm(initial=data)
@@ -68,8 +69,13 @@ def modify_deleted(request):
 
                 form = CreerCritiqueForm(initial=data)
 
+        for critique in critique_demandees: 
+                if int(post_id) == critique.reponse_critique.id:
+                    critique_demandee = critique
+                    break
+
                 
-                return render(request, 'modify.html', context={'form' : form})
+        return render(request, 'modify.html', context={'form' : form, 'critique_demandee' : critique_demandee})
 
     if 'deleted_btn_cree' in request.POST : 
         post_id = request.POST.get('deleted_btn_cree', None)
@@ -82,3 +88,28 @@ def modify_deleted(request):
 
 
     return redirect('posts-user')
+
+def register_modifications(request):
+
+    news_informations_forms = CreerCritiqueForm()
+    new_informations_Mod = CreerCritiqueMod.objects.all()
+    id_critique_modif = request.POST.get('btn_register',None)
+
+    for data in new_informations_Mod:
+        if int(id_critique_modif) == data.id:
+            new_informations_Mod = data
+            break
+
+    
+    if request.method == "POST":
+        if news_informations_forms.is_valid:
+            news_informations_forms = CreerCritiqueForm(request.POST)
+            new_informations_Mod.titre = news_informations_forms.data['titre_creer']
+            new_informations_Mod.note = news_informations_forms.data['note']
+            new_informations_Mod.commentaire = news_informations_forms.data['commentaire']
+
+            new_informations_Mod.save()
+
+    return redirect('posts-user')
+
+    

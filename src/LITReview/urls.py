@@ -36,6 +36,7 @@ urlpatterns = [
     path('posts-user/', post.views.post_user, name='posts-user'),
     path('unfollow/', abo.views.unfollow, name ="unfollow"),
     path('follow/', abo.views.follow, name ="follow"),
-    path('modifier/', post.views.modify_deleted, name = "modify_deleted")
+    path('modifier/', post.views.modify_deleted, name = "modify_deleted"),
+    path('enregister_modifications/', post.views.register_modifications, name ="register_modifications")
     
 ]
