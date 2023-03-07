@@ -5,7 +5,7 @@ from flow.models import DemanderCritiqueMod, CreerCritiqueMod
 class DemanderCritiqueForm(ModelForm):
     titre_demande = forms.CharField(max_length=63, label="Titre")
     description = forms.CharField(max_length=63, label="Description")
-    img_livre = forms.ImageField(label="image")
+    img_livre = forms.ImageField(label="img_livre")
     class Meta:
         model = DemanderCritiqueMod
         fields = ('titre_demande', 'description', 'img_livre')

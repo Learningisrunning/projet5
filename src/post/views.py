@@ -13,11 +13,11 @@ def post_user(request):
     liste_critique_demandees = []
 
     for i in range(len(critique_crees)): 
-        if user.username == critique_crees[i].createur:
+        if user.username == critique_crees[i].createur.username:
             liste_critique_crees.append(critique_crees[i])
 
     for j in range(len(critique_demandees)): 
-        if user.username == critique_demandees[j].createur:
+        if user.username == critique_demandees[j].createur.username:
             liste_critique_demandees.append(critique_demandees[j])
         
 
@@ -46,7 +46,7 @@ def modify_deleted(request):
                 form = DemanderCritiqueForm(initial=data)
 
                 
-                return render(request, 'modify.html', context={'form' : form})
+                return render(request, 'modify.html', context={'form' : form, 'critique_demandee' : critique})
 
     if 'deleted_btn_demande' in request.POST : 
         post_id = request.POST.get('deleted_btn_demande', None)
@@ -70,9 +70,10 @@ def modify_deleted(request):
                 form = CreerCritiqueForm(initial=data)
 
         for critique in critique_demandees: 
-                if int(post_id) == critique.reponse_critique.id:
-                    critique_demandee = critique
-                    break
+                if  critique.reponse_critique != None:
+                    if int(post_id) == critique.reponse_critique.id:
+                        critique_demandee = critique
+                        break
 
                 
         return render(request, 'modify.html', context={'form' : form, 'critique_demandee' : critique_demandee})
@@ -91,24 +92,51 @@ def modify_deleted(request):
 
 def register_modifications(request):
 
-    news_informations_forms = CreerCritiqueForm()
-    new_informations_Mod = CreerCritiqueMod.objects.all()
-    id_critique_modif = request.POST.get('btn_register',None)
+   
+    
 
-    for data in new_informations_Mod:
-        if int(id_critique_modif) == data.id:
-            new_informations_Mod = data
-            break
+    if 'btn_register_creer' in request.POST : 
+        id_critique_modif = request.POST.get('btn_register_creer',None)
+        news_informations_forms = CreerCritiqueForm()
+        new_informations_Mod = CreerCritiqueMod.objects.all()
+
+        for data in new_informations_Mod:
+            if int(id_critique_modif) == data.id:
+                new_informations_Mod = data
+                break
 
     
-    if request.method == "POST":
-        if news_informations_forms.is_valid:
-            news_informations_forms = CreerCritiqueForm(request.POST)
-            new_informations_Mod.titre = news_informations_forms.data['titre_creer']
-            new_informations_Mod.note = news_informations_forms.data['note']
-            new_informations_Mod.commentaire = news_informations_forms.data['commentaire']
+        if request.method == "POST":
+            if news_informations_forms.is_valid:
+                news_informations_forms = CreerCritiqueForm(request.POST)
+                new_informations_Mod.titre = news_informations_forms.data['titre_creer']
+                new_informations_Mod.note = news_informations_forms.data['note']
+                new_informations_Mod.commentaire = news_informations_forms.data['commentaire']
 
-            new_informations_Mod.save()
+                new_informations_Mod.save()
+
+    elif 'btn_register_demandee' in request.POST : 
+
+        id_critique_modif = request.POST.get('btn_register_demandee',None)
+        news_informations_forms = DemanderCritiqueForm()
+        new_informations_Mod = DemanderCritiqueMod.objects.all()
+
+        for data in new_informations_Mod:
+            if int(id_critique_modif) == data.id:
+                new_informations_Mod = data
+                break
+
+    
+        if request.method == "POST":
+            if news_informations_forms.is_valid:
+                news_informations_forms = DemanderCritiqueForm(request.POST, request.FILES)
+                new_informations_Mod.titre = news_informations_forms.data['titre_demande']
+                new_informations_Mod.description = news_informations_forms.data['description']
+                if len(news_informations_forms.files) != 0:
+                    new_informations_Mod.img_livre = news_informations_forms.files['img_livre']
+
+                new_informations_Mod.save()
+
 
     return redirect('posts-user')
 

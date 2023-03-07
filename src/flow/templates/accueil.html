@@ -14,6 +14,7 @@
                         <li>{{critique.description}}</li>
                         <li>{{critique.img_livre}}</li>
                         <li>{{critique.id}}</li>
+                        <li>{{critique.createur}}</li>
                     </div>
                     <button type="submit"  name="critique_rep" value= "{{critique.id}} " form="critique_rep_form">Ajouter une critique</button>
                 </form>
@@ -22,10 +23,12 @@
                 <li>{{critique.titre}}</li>
                 <li>{{critique.description}}</li>
                 <li>{{critique.img_livre}}</li>
-
+                <li>{{critique.createur}}</li>
+                <h1>Rep en dessous</h1>
                 <li>{{critique.reponse_critique.titre}}</li>
                 <li>{{critique.reponse_critique.note}}</li>
                 <li>{{critique.reponse_critique.commentaire}}</li>
+                <li>{{critique.reponse_critique.createur}}</li>
             {% endif %}
         </ul>
         {% endfor %}
