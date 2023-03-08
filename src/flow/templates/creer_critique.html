@@ -1,20 +1,44 @@
 {% extends 'base_flow.html' %}
 {% block content %}
-    <h2>Ajouter une critique</h2>
+<div class="container-critique">
+    <h2>Créer une critique</h2>
     <form  method="POST" action="{% url 'creer_critique' %}" enctype="multipart/form-data", id="form_rep_demande_critique">
         {% csrf_token %}
         {% if numero_critique_rep == None %}
-            {{form_demander_critique.as_p}}
-            {{ form_creer_critique.as_p }}
-            {{message}}
-            <button type="submit">Envoyer</button>
+            <div class="small-container">
+                <p>Livre / Article</p>
+                {{form_demander_critique.as_p}}
+            </div>
+            <div class="small-container">
+                <p>Critique</p>
+                {{ form_creer_critique.as_p }}
+            
+                {{message}}
+                <button class ="btn-send"  type="submit">Envoyer</button>
+            </div>
         {% else %}
-            {{data.titre}}
-            {{data.description}}
-            {{data.img_livre}}
+        <div class="very-small-container">
+            <p>Vous êtes en train de poster en réponse à </p>
+            <ul>
+                <div>
+                    <li>{{data.createur}} a demandé une critique</li>
+                    <li>{{data.titre}}</li>
+                    <li>{{data.description}}</li>
+                    <li>{{data.img_livre}}</li>
+                </div>
+                <div id="date_ticket">
+                    <li>{{data.date_creation}}</li>
+                </div>
+            
+            </ul>
+        </div>
+        <div class="small-container">
+            <p>Critique</p>
             {{ form_creer_critique.as_p }}
             {{message}}
-            <button type="submit"  name="critique_numero" value= "{{data.id}} " form="form_rep_demande_critique">Envoyer</button>
+            <button type="submit" class ="btn-send" name="critique_numero" value= "{{data.id}} " form="form_rep_demande_critique">Envoyer</button>
+        </div>
         {% endif %}
     </form>
+</div>
 {% endblock content %}

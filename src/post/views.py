@@ -22,7 +22,7 @@ def post_user(request):
         
 
      
-    return render(request, 'posts.html', context={ 'user' : user, 'liste_critique_crees' : liste_critique_crees, 'liste_critique_demandees' : liste_critique_demandees })
+    return render(request, 'posts.html', context={ 'user' : user, 'liste_critique_crees' : liste_critique_crees, 'liste_critique_demandees' : liste_critique_demandees, 'critique_demandee' : critique_demandees})
 
 def modify_deleted(request):
     

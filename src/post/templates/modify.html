@@ -1,27 +1,38 @@
 {% extends 'base_flow.html' %}
 {% block content %}
+<div class="main-container-modify">
     <h2> modification de la publication</h2>
     {% if critique_demandee.reponse_critique.id != None and form.img_livre == None %}
-        <form  method="POST" action="{% url 'register_modifications' %}" enctype="multipart/form-data", id="form_modif_rep_demande_critique">
-            {% csrf_token %}
-        <ul>
-            <li>{{critique_demandee.titre}}</li>
-            <li>{{critique_demandee.description}}</li>
-            <li>{{critique_demandee.img_livre}}</li>
-            
-        </ul>
-        {{form.as_p}}
-        
-        <button type="submit" form="form_modif_rep_demande_critique" name="btn_register_creer" value ="{{critique_demandee.reponse_critique.id}}">Enregistrer</button>
+    <div class="ticket-demande">
+            <p>Vous êtes en train de poster en réponse à</p>
+            <form  method="POST" action="{% url 'register_modifications' %}" enctype="multipart/form-data", id="form_modif_rep_demande_critique">
+                {% csrf_token %}
+            <ul>
+                <div class="ticket-elements">
+                    <div class="main-elements">
+                        <li>{{critique_demandee.titre}}</li>
+                        <li>{{critique_demandee.description}}</li>
+                        <li>{{critique_demandee.img_livre}}</li>
+                    </div>
+                    <div class="ticket-date">
+                        <li>{{critique_demandee.date_creation}}</li>
+                    </div>
+                </div>
+            </ul>
+    </div>
+    <div class = "answer-ticket">
+        <p>Critique</p>
+            {{form.as_p}}
+        <button type="submit" id="btn-register-change-place" class="btn-register-changes"  form="form_modif_rep_demande_critique" name="btn_register_creer" value ="{{critique_demandee.reponse_critique.id}}">Enregistrer</button>
         </form>
-
+    </div>
     {% else %}
         <form  method="POST" action="{% url 'register_modifications' %}" enctype="multipart/form-data", id="form_modif_rep_demande_critique">
             {% csrf_token %}
             {{form.as_p}}
         
-        <button type="submit" form="form_modif_rep_demande_critique" name="btn_register_demandee" value ="{{critique_demandee.id}}">Enregistrer</button>
+        <button type="submit" class="btn-register-changes" form="form_modif_rep_demande_critique" name="btn_register_demandee" value ="{{critique_demandee.id}}">Envoyer</button>
         </form>
     {% endif %}
-
+</div>
 {% endblock content %}

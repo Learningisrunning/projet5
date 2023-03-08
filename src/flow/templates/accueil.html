@@ -1,36 +1,55 @@
 {% extends 'base_flow.html' %}
 {% block content %}
-    <a href="{% url 'demander_critique' %}"><button type="button">Demander une critique</button></a>
-    <a href="{% url 'creer_critique' %}"><button type="button">Créer une critique</button></a>
+    <div class="main_container">
+        <div class="btn-container">
+            <a href="{% url 'demander_critique' %}"><button class="btn" type="button">Demander une critique</button></a>
+            <a href="{% url 'creer_critique' %}"><button class="btn" type="button">Créer une critique</button></a>
+        </div>
 
-    <section>
-        {% for critique in critique_demandee %}
-        <ul>
-            {% if critique.reponse_critique == None %}
-                <form action="{% url 'creer_critique_rep_demande' %}" method="POST" id="critique_rep_form">
-                    {% csrf_token %}
-                    <div id="critique_demandee">
-                        <li>{{critique.titre}}</li>
-                        <li>{{critique.description}}</li>
-                        <li>{{critique.img_livre}}</li>
-                        <li>{{critique.id}}</li>
-                        <li>{{critique.createur}}</li>
+        <section>
+            {% for critique in critique_demandee %}
+            <ul>
+                {% if critique.reponse_critique == None %}
+                <div class="block_create">
+                    <form action="{% url 'creer_critique_rep_demande' %}" method="POST" id="critique_rep_form">
+                        {% csrf_token %}
+                        <div id="critique_demandee">
+                            <div class="first_part_block">
+                                <li>{{critique.createur}} a demandé une critique</li>
+                                <li>{{critique.titre}} - {{critique.description}}</li>
+                                <li>{{critique.img_livre}}</li>
+                            </div>
+                            <div id="ask_date">
+                                <li>{{critique.date_creation}}</li>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn"  id ="btn-answer" name="critique_rep" value= "{{critique.id}} " form="critique_rep_form">Ajouter une critique</button>
+                    </form>
+                </div>
+                
+                    {% else %}
+                    <div class="block_create">
+                        <div class="block_answer">
+                            <div class="first_part_block">
+                                <li>{{critique.reponse_critique.createur}} a publié une critique</li>
+                                <li>{{critique.reponse_critique.titre}} - {{critique.reponse_critique.note}}/5</li>
+                                <li>{{critique.reponse_critique.commentaire}}</li>
+                            </div>
+                            <div id="answer_date">
+                                <li>{{critique.reponse_critique.date_creation}}</li>  
+                            </div> 
+                        </div>
+                        <div class="ticket-answered">
+                            <li>Ticket - {{critique.createur}}</li>
+                            <li>{{critique.titre}}</li>
+                            <li>{{critique.img_livre}}</li>
+                        </div>
                     </div>
-                    <button type="submit"  name="critique_rep" value= "{{critique.id}} " form="critique_rep_form">Ajouter une critique</button>
-                </form>
+                    {% endif %}
                
-            {% else %}
-                <li>{{critique.titre}}</li>
-                <li>{{critique.description}}</li>
-                <li>{{critique.img_livre}}</li>
-                <li>{{critique.createur}}</li>
-                <h1>Rep en dessous</h1>
-                <li>{{critique.reponse_critique.titre}}</li>
-                <li>{{critique.reponse_critique.note}}</li>
-                <li>{{critique.reponse_critique.commentaire}}</li>
-                <li>{{critique.reponse_critique.createur}}</li>
-            {% endif %}
-        </ul>
-        {% endfor %}
-    </section>
+            </ul>
+            {% endfor %}
+        </section>
+    </div>
 {% endblock content %}
